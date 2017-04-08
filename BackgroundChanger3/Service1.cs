@@ -3,10 +3,11 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.ServiceProcess;
 using System.Text;
+using System.Management;
 
-namespace BackgroundChanger3
+namespace HardwareChangeEventTrigger
 {
-	public partial class Service1 : ServiceBase, IHardWareChanged
+	public partial class Service1 : ServiceBase
 	{
 		#region Fields
 
@@ -15,6 +16,7 @@ namespace BackgroundChanger3
 		private IntPtr directoryHandle;
 		private Win32.ServiceControlHandlerEx myCallback;
 
+		public delegate void HardwareChangedEventHandler();
 		public event HardwareChangedEventHandler HardwareChangedEvent;
 
 		#endregion
@@ -31,7 +33,6 @@ namespace BackgroundChanger3
 		{
 			if (control == Win32.SERVICE_CONTROL_STOP || control == Win32.SERVICE_CONTROL_SHUTDOWN)
 			{
-				
 				Win32.UnregisterDeviceNotification(deviceEventHandle);
 
 				base.Stop();
@@ -44,15 +45,36 @@ namespace BackgroundChanger3
 						Win32.DEV_BROADCAST_HDR hdr;
 						hdr = (Win32.DEV_BROADCAST_HDR)
 							Marshal.PtrToStructure(eventData, typeof(Win32.DEV_BROADCAST_HDR));
+						
 
 						if (hdr.dbcc_devicetype == Win32.DBT_DEVTYP_DEVICEINTERFACE)
 						{
+							//ManagementObjectSearcher searcher = new ManagementObjectSearcher("select * from " + "Win32_DesktopMonitor");
+
+							//string searchGUID;
+							//foreach (ManagementObject share in searcher.Get())
+							//{
+							//	if (share["DeviceID"] != null)
+							//	{
+							//		searchGUID = share["UniqueId"].ToString();
+							//	}
+							//	foreach (PropertyData PC in share.Properties)
+							//	{
+							//		int debug = 0;
+							//		//some codes ...
+
+							//	}
+							//}
+
 							OnHardwareChangedEvent();
 							//Win32.DEV_BROADCAST_DEVICEINTERFACE deviceInterface;
 							//deviceInterface = (Win32.DEV_BROADCAST_DEVICEINTERFACE)
 							//	Marshal.PtrToStructure(eventData, typeof(Win32.DEV_BROADCAST_DEVICEINTERFACE));
 							//string name = new string(deviceInterface.dbcc_name);
-							//name = name.Substring(0, name.IndexOf('\0')) + "\\";
+							//string guid = System.Text.Encoding.Default.GetString(deviceInterface.dbcc_classguid);
+							//int type = deviceInterface.dbcc_devicetype;
+
+							// name = name.Substring(0, name.IndexOf('\0')) + "\\";
 
 							//StringBuilder stringBuilder = new StringBuilder();
 							//Win32.GetVolumeNameForVolumeMountPoint(name, stringBuilder, 100);

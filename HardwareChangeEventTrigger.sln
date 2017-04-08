@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackgroundChanger3", "BackgroundChanger3\BackgroundChanger3.csproj", "{C29D3E75-B6B4-42CE-B017-4E544A43841C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HardwareChangeEventTrigger", "BackgroundChanger3\HardwareChangeEventTrigger.csproj", "{C29D3E75-B6B4-42CE-B017-4E544A43841C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
